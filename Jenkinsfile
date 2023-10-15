@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh './jenkins/scripts/deploy.sh' // Ganti dengan perintah yang sesuai untuk deploy aplikasi Anda
+                sh './jenkins/scripts/deploy.sh' 
                 timeout(time: 1, unit: 'MINUTES') {
                     input message: 'Aplikasi telah di-deploy. Tunggu 1 menit sebelum otomatis berakhir.'
                 }
