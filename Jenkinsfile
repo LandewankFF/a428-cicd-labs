@@ -18,11 +18,12 @@ pipeline {
         }
         stage('Manual Approval') {
             steps {
-                input message: 'Lanjutkan ke tahap Deploy? (Klik "Proceed" untuk mengakhiri)' 
-
+                script {
+                    currentBuild.resultIsEqualTo("SUCCESS") ?: error("Pipeline has failed. Cannot proceed.")
+                }
+                input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', fail: 'Abort'
             }
         }
-
         stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deploy.sh' 
@@ -32,5 +33,6 @@ pipeline {
                 sh './jenkins/scripts/kill.sh'
             }
         }
+
     }
 }
