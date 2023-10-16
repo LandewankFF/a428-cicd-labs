@@ -16,22 +16,5 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deploy') {
-            steps {
-                sh './jenkins/scripts/deploy.sh'
-                timeout(time: 1, unit: 'MINUTES') {
-                    input message: 'Aplikasi telah di-deploy. Tunggu 1 menit sebelum otomatis berakhir.'
-                }
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
-        stage('Manual Approval') {
-            steps {
-                script {
-                    currentBuild.resultIsEqualTo("SUCCESS") ?: error("Pipeline has failed. Cannot proceed.")
-                }
-                input message: 'Lanjutkan ke tahap Deploy?', submitter: 'admin'
-            }
-        }
     }
 }
