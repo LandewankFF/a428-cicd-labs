@@ -21,12 +21,12 @@ pipeline {
                 script {
                     currentBuild.resultIsEqualTo("SUCCESS") ?: error("Pipeline has failed. Cannot proceed.")
                 }
-                input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', fail: 'Abort'
+                input message: 'Lanjutkan ke tahap Deploy?', submitter: 'admin'
             }
         }
-        stage('Deploy'){
+        stage('Deploy') {
             steps {
-                sh './jenkins/scripts/deploy.sh' // Ganti dengan perintah yang sesuai untuk deploy aplikasi Anda
+                sh './jenkins/scripts/deploy.sh'
                 timeout(time: 1, unit: 'MINUTES') {
                     input message: 'Aplikasi telah di-deploy. Tunggu 1 menit sebelum otomatis berakhir.'
                 }
