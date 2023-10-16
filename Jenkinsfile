@@ -24,15 +24,14 @@ pipeline {
                 input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', fail: 'Abort'
             }
         }
-        stage('Deploy') {
+        stage('Deploy'){
             steps {
-                sh './jenkins/scripts/deploy.sh' 
+                sh './jenkins/scripts/deploy.sh' // Ganti dengan perintah yang sesuai untuk deploy aplikasi Anda
                 timeout(time: 1, unit: 'MINUTES') {
                     input message: 'Aplikasi telah di-deploy. Tunggu 1 menit sebelum otomatis berakhir.'
                 }
                 sh './jenkins/scripts/kill.sh'
             }
         }
-
     }
 }
